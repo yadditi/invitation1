@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday Surprise</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-family:Arial;
+background:url("bg1.jpg");
+background-size:cover;
+background-position:center;
+overflow:hidden;
+}
+
+h1{
+color:white;
+text-shadow:2px 2px 10px black;
+}
+
+.container{
+display:flex;
+gap:50px;
+margin-top:40px;
+}
+
+canvas{
+border-radius:50%;
+cursor:pointer;
+}
+
+/* floating hearts */
+
+.heart{
+position:absolute;
+color:#ff4d6d;
+font-size:24px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{
+transform:translateY(100vh);
+opacity:1;
+}
+100%{
+transform:translateY(-10vh);
+opacity:0;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Scratch the Hearts ❤️</h1>
+
+<div class="container">
+<canvas id="card1" width="200" height="200"></canvas>
+<canvas id="card2" width="200" height="200"></canvas>
+</div>
+
+<script>
+
+/* floating hearts */
+
+function createHeart(){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💖";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(20+Math.random()*30)+"px";
+heart.style.animationDuration=(4+Math.random()*3)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+}
+
+setInterval(createHeart,500);
+
+
+/* scratch cards */
+
+function createScratchCard(canvasId, message, link=false){
+
+let canvas=document.getElementById(canvasId);
+let ctx=canvas.getContext("2d");
+
+ctx.fillStyle="red";
+ctx.beginPath();
+ctx.moveTo(100,180);
+ctx.bezierCurveTo(200,120,200,40,100,80);
+ctx.bezierCurveTo(0,40,0,120,100,180);
+ctx.fill();
+
+ctx.globalCompositeOperation="destination-out";
+
+canvas.addEventListener("mousemove", scratch);
+
+function scratch(e){
+
+let rect=canvas.getBoundingClientRect();
+let x=e.clientX-rect.left;
+let y=e.clientY-rect.top;
+
+ctx.beginPath();
+ctx.arc(x,y,20,0,Math.PI*2);
+ctx.fill();
+
+}
+
+canvas.addEventListener("mouseleave", check);
+
+function check(){
+
+let pixels=ctx.getImageData(0,0,canvas.width,canvas.height);
+let total=pixels.data.length/4;
+let count=0;
+
+for(let i=3;i<pixels.data.length;i+=4){
+if(pixels.data[i]==0) count++;
+}
+
+if(count/total>0.4){
+
+if(link){
+window.location.href="invite.html";
+}else{
+alert("Bonus Card 🎉 Try the other heart!");
+}
+
+}
+
+}
+
+}
+
+createScratchCard("card1","bonus");
+createScratchCard("card2","invite",true);
+
+</script>
+
+</body>
+</html>

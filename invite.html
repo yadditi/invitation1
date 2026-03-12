@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday Invitation</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+font-family:Georgia;
+background:url("bg2.jpg");
+background-size:cover;
+background-position:center;
+overflow:hidden;
+}
+
+.card{
+background:rgba(0,0,0,0.6);
+padding:40px;
+border-radius:20px;
+width:520px;
+line-height:1.7;
+color:white;
+}
+
+h1{
+color:#ffd6e7;
+}
+
+/* confetti */
+
+.confetti{
+position:absolute;
+width:10px;
+height:10px;
+background:red;
+animation:fall 4s linear infinite;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-10vh) rotate(0deg);
+}
+100%{
+transform:translateY(100vh) rotate(720deg);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>🎂 Birthday Invitation 🎉</h1>
+
+<p>Dear Tushar,</p>
+
+<p>
+Time flies. In a twinkling of an eye, it's my 25th birthday!
+</p>
+
+<p>
+I invite you and your family to my birthday party!
+</p>
+
+<p>
+<b>Time:</b> 6:00 p.m.<br>
+<b>Date:</b> 20 April 2026
+</p>
+
+<p>
+<b>Location:</b><br>
+MILLO 245/U1,<br>
+East High Court Road,<br>
+near Zudio Showroom,<br>
+Civil Lines, Nagpur,<br>
+Maharashtra, 440001
+</p>
+
+<p>
+Please be at my birthday party<br>
+to bless me and have fun.
+</p>
+
+</div>
+
+<script>
+
+/* confetti generator */
+
+function createConfetti(){
+
+for(let i=0;i<120;i++){
+
+let confetti=document.createElement("div");
+confetti.className="confetti";
+
+confetti.style.left=Math.random()*100+"vw";
+confetti.style.background=
+"hsl("+Math.random()*360+",100%,50%)";
+
+confetti.style.animationDuration=
+(3+Math.random()*3)+"s";
+
+document.body.appendChild(confetti);
+
+}
+
+}
+
+createConfetti();
+
+</script>
+
+</body>
+</html>
